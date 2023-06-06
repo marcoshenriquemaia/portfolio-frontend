@@ -1,47 +1,50 @@
-import { ClickHandler } from "../handlers";
-import { KeyboardWalkEvent } from "../handlers/keyboard";
-import { UserInterface, WorldConstructorInterface } from "../interfaces";
-import { User } from "../user/user";
+import { KeyboardWalkEvent } from '../handlers/keyboard'
+import { UserInterface, WorldConstructorInterface } from '../interfaces'
+import { Sprite } from '../sprites'
+import { IanConfig } from '../sprites/characters/ian/config'
+import { User } from '../user/user'
+import { Debounce } from '../utils/debounce'
 
 export class World {
-  private socket: WorldConstructorInterface['socket'];
-  private $canvas: WorldConstructorInterface['$canvas'];
-  private ctx: CanvasRenderingContext2D | null;
-  private userList: UserInterface[] = [];
+  private socket: WorldConstructorInterface['socket']
+  private ctx: CanvasRenderingContext2D | null
+  private userList: Map<String, User> = new Map()
 
-  constructor({
-    socket,
-    $canvas,
-  }: WorldConstructorInterface) {
-    this.socket = socket;
-    this.$canvas = $canvas;
-    this.ctx = $canvas.getContext('2d');
+  constructor({ socket, $canvas }: WorldConstructorInterface) {
+    this.socket = socket
+    this.ctx = $canvas.getContext('2d')
   }
 
   init() {
-    const keyboardWalk = new KeyboardWalkEvent()
+    this.keyboardWalk()
+    this.update()
+  }
 
-    // const mouseHandler = new ClickHandler({
-    //   $canvas: this.$canvas,
-    // })
+  keyboardWalk() {
+    const keyboardWalk = new KeyboardWalkEvent()
+    const debounce = new Debounce(100)
 
     keyboardWalk.subscribe((direction) => {
       this.socket.emit('user:walk', direction)
-    })
-
-    // mouseHandler.subscribe((coord, direction) => {
-    //   this.socket.emit('user:walk', direction)
-    // })
-
-    this.socket.on("world:update", ({ userList }) => {
-      this.userList = userList;
-      this.ctx?.clearRect(0, 0, window.innerWidth, window.innerHeight);
-      this.userList.forEach((user: UserInterface) => {
-        const userInstance = new User(user)
-        
-        userInstance.print(this.ctx, user);
+      debounce.run(() => {
+        this.socket.emit('user:stop', direction)
       })
-    });
+    })
   }
 
+  update() {
+    this.socket.on('world:update', ({ userList }) => {
+      this.ctx?.clearRect(0, 0, window.innerWidth, window.innerHeight)
+      userList.forEach((user: UserInterface) => {
+        const currentUser = this.userList.get(user.id)
+
+        if (currentUser) return currentUser.update(user)
+
+        const sprite = new Sprite(new IanConfig(), this.ctx!)
+
+        const newUser = new User(user, sprite)
+        this.userList.set(user.id, newUser)
+      })
+    })
+  }
 }

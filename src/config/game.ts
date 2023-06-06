@@ -1,3 +1,3 @@
 export enum GameConfig {
-  tickRate = 15,
+  tickRate = 16,
 }

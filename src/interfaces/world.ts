@@ -1,6 +1,6 @@
-import { Socket } from "socket.io-client";
+import { Socket } from 'socket.io-client'
 
 export interface WorldConstructorInterface {
-  socket: Socket;
-  $canvas: HTMLCanvasElement;
+  socket: Socket
+  $canvas: HTMLCanvasElement
 }

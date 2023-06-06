@@ -1,9 +1,9 @@
-import { io } from "socket.io-client";
+import { io } from 'socket.io-client'
 
-export const socket = io("http://localhost:3000", {
-  transports: ["websocket"],
-});
+export const socket = io('http://localhost:3000', {
+  transports: ['websocket'],
+})
 
-socket.on("connect", () => {
-  console.log("websocket connected");
+socket.on('connect', () => {
+  console.log('websocket connected')
 })

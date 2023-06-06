@@ -1,3 +1,3 @@
-export * from "./user";
-export * from "./position";
-export * from "./world";
+export * from './user'
+export * from './position'
+export * from './world'
