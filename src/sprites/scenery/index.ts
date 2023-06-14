@@ -7,17 +7,21 @@ export class Scenery {
     this.image.src = sceneryConfig.path
   }
 
-  print(width: number, height: number) {
+  print(width: number, height: number, x: number = 0, y: number = 0) {
     this.ctx.drawImage(
       this.image,
-      this.sceneryConfig.location.x,
-      this.sceneryConfig.location.y,
-      this.sceneryConfig.location.width,
-      this.sceneryConfig.location.height,
+      x ?? this.sceneryConfig.location.x,
+      y ?? this.sceneryConfig.location.y,
+      width,
+      height,
       0,
       0,
       width,
       height
     )
+  }
+
+  getImageFullSize() {
+    return this.sceneryConfig.fullSize
   }
 }

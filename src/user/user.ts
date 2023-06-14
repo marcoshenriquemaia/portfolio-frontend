@@ -26,10 +26,16 @@ export class User {
     this.count++
   }
 
-  private print() {
-    const { x, y } = this.position
-
-    this.sprite.print(this.direction, this.status, this.frame, x, y)
+  print($canvas: HTMLCanvasElement, isMe: boolean, me: User) {
+    const center = {
+      x: $canvas.width / 2 - 50,
+      y: $canvas.height / 2 - 50,
+    }
+    const position = {
+      x: isMe ? center.x : this.position.x - me.position.x + center.x,
+      y: isMe ? center.y : this.position.y - me.position.y + center.y,
+    }
+    this.sprite.print(this.direction, this.status, this.frame, position.x, position.y)
   }
 
   update(user: UserInterface) {
@@ -38,6 +44,5 @@ export class User {
     this.direction = user.direction
 
     this.spriteLoop(10)
-    this.print()
   }
 }
