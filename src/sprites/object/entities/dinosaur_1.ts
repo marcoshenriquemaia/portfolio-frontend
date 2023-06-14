@@ -1,4 +1,3 @@
-import { PositionInterface } from '../../../interfaces'
 import dinosaur from '/assets/Museum_room_3_layer_2_48x48.png'
 
 export const dinosaur_1 = {
