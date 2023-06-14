@@ -11,7 +11,7 @@ export class World {
   private socket: WorldConstructorInterface['socket']
   private ctx: CanvasRenderingContext2D | null
   private userList: Map<String, User> = new Map()
-  private scenery: Scenery
+  scenery: Scenery
   private $canvas: HTMLCanvasElement
 
   constructor({ socket, $canvas }: WorldConstructorInterface) {
