@@ -40,7 +40,6 @@ export class World {
 
   listemWorldUpdate() {
     this.socket.on('world:update', ({ userList }) => {
-      console.count()
       this.ctx?.clearRect(0, 0, this.$canvas.width, this.$canvas.height)
       userList.forEach((user: UserInterface) => {
         const currentUser = this.userList.get(user.id)
