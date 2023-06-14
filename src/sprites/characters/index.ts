@@ -1,6 +1,6 @@
-import { Status } from './../interfaces/sprites'
-import { Directions } from '../interfaces'
-import { SpriteConfig } from '../interfaces/sprites'
+import { Status } from '../../interfaces/sprites'
+import { Directions } from '../../interfaces'
+import { SpriteConfig } from '../../interfaces/sprites'
 export class Sprite {
   image: HTMLImageElement
   frame: number = 0
@@ -14,9 +14,6 @@ export class Sprite {
     const sprites = this.spriteConfig.sprites[status][direction]
     const { x: sx, y: sy, width: s_width, height: s_height } = sprites[frame % sprites.length]
 
-    this.image.onload = () => {
-      this.ctx.drawImage(this.image, sx, sy, s_width, s_height, x, y, s_width, s_height)
-    }
     this.ctx.drawImage(this.image, sx, sy, s_width, s_height, x, y, s_width, s_height)
   }
 }

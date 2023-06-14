@@ -1,7 +1,9 @@
 import { KeyboardWalkEvent } from '../handlers/keyboard'
 import { UserInterface, WorldConstructorInterface } from '../interfaces'
-import { Sprite } from '../sprites'
+import { Sprite } from '../sprites/characters'
 import { IanConfig } from '../sprites/characters/ian/config'
+import { Scenery } from '../sprites/scenery'
+import { sceneryConfig } from '../sprites/scenery/office/config'
 import { User } from '../user/user'
 import { Debounce } from '../utils/debounce'
 
@@ -9,15 +11,19 @@ export class World {
   private socket: WorldConstructorInterface['socket']
   private ctx: CanvasRenderingContext2D | null
   private userList: Map<String, User> = new Map()
+  private scenery: Scenery
+  private $canvas: HTMLCanvasElement
 
   constructor({ socket, $canvas }: WorldConstructorInterface) {
     this.socket = socket
     this.ctx = $canvas.getContext('2d')
+    this.scenery = new Scenery(sceneryConfig, this.ctx!)
+    this.$canvas = $canvas
   }
 
   init() {
     this.keyboardWalk()
-    this.update()
+    this.listemWorldUpdate()
   }
 
   keyboardWalk() {
@@ -32,9 +38,10 @@ export class World {
     })
   }
 
-  update() {
+  listemWorldUpdate() {
     this.socket.on('world:update', ({ userList }) => {
-      this.ctx?.clearRect(0, 0, window.innerWidth, window.innerHeight)
+      console.count()
+      this.ctx?.clearRect(0, 0, this.$canvas.width, this.$canvas.height)
       userList.forEach((user: UserInterface) => {
         const currentUser = this.userList.get(user.id)
 

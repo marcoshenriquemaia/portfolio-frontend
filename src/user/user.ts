@@ -1,5 +1,5 @@
 import { Directions, UserInterface, UserStatus } from '../interfaces'
-import { Sprite } from '../sprites'
+import { Sprite } from '../sprites/characters'
 
 export class User {
   id: string
