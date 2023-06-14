@@ -1,7 +1,8 @@
 import { SceneryConfig } from '../../../interfaces/scenery'
+import sceneryImage from '../../../../assets/office.png'
 
 export const sceneryConfig: SceneryConfig = {
-  path: 'src/sprites/scenery/office/assets/office.png',
+  path: sceneryImage,
   fullSize: {
     width: 1364,
     height: 2157,

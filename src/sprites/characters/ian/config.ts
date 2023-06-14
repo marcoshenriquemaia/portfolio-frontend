@@ -1,8 +1,9 @@
 import { SpriteConfig } from '../../../interfaces/sprites'
 import { walk, idle } from './sprites'
+import Ian from '../../../../assets/ian.png'
 
 export class IanConfig implements SpriteConfig {
-  path = 'src/sprites/characters/ian/assets/ian.png'
+  path = Ian
   fullSize = {
     width: 1200,
     height: 800,
