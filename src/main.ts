@@ -8,7 +8,7 @@ function bootstrap() {
 
   const $canvas = document.createElement('canvas')
   $canvas.id = 'main-canvas'
-  $canvas.width = window.innerWidth > 1364 ? 1364 : window.innerWidth
+  $canvas.width = window.innerWidth
   $canvas.height = window.innerHeight
 
   $app?.appendChild($canvas)
