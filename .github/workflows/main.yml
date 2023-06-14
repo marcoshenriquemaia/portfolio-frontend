@@ -29,3 +29,5 @@ jobs:
         with:
           branch: master
           folder: dist
+          base_branch: master
+          single_commit: true
